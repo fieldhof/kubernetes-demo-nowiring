@@ -2,7 +2,7 @@
   "kind": "Service",
   "apiVersion": "v1",
   "metadata": {
-    "name": "inaetics-queue-celix-service",
+    "name": "queue-celix-service",
     "creationTimestamp": null
   },
   "spec": {
