@@ -1,0 +1,31 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "inaetics-queue-celix-service",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "ports": [
+      {
+	"name": "discovery-cfg",
+        "protocol": "TCP",
+        "port": 85,
+        "targetPort": 85,
+        "nodePort": 85
+      },
+      {
+	"name": "node-discovery-node-wa",
+        "protocol": "TCP",
+        "port": 86,
+        "targetPort": 86,
+        "nodePort": 86
+      }
+    ],
+    "selector": {
+      "name": "inaetics-queue-celix-pod"
+    },
+    "type": "NodePort",
+    "sessionAffinity": "None"
+  }
+}

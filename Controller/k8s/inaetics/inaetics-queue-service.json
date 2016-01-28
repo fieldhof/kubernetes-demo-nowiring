@@ -1,0 +1,24 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "inaetics-queue-service",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "ports": [
+      {
+	"name": "discovery-cfg",
+        "protocol": "TCP",
+        "port": 87,
+        "targetPort": 8080,
+        "nodePort": 87
+      }
+    ],
+    "selector": {
+      "name": "inaetics-queue-pod"
+    },
+    "type": "NodePort",
+    "sessionAffinity": "None"
+  }
+}

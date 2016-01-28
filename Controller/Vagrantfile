@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+require 'fileutils'
+Vagrant.require_version ">= 1.6.0"
+
+$instance_name="controller"
+$instance_ip="172.17.8.20"
+$instance_mac="080027DC3392"
+
+$coreos_channel="alpha"
+$coreos_name="coreos-" + $coreos_channel 
+$coreos_version="845.0.0"
+
+$virtualbox_gui = false
+$virtualbox_memory = 1024
+$virtualbox_cpus = 1
+
+# makes all scripts executable & move the cloudinit files to the right place
+$provision_script = <<SCRIPT
+    mv /tmp/user-data/* /var/lib/coreos-vagrant/ && \
+    find /home/core/* -name '*.sh' -type f -exec chmod 0755 '{}' ';' && \
+    chmod 0755 /home/core/opt/bin/* && mkdir /opt && cp -r /home/core/opt/* /opt/
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.box = $coreos_name
+    config.vm.box_version = $coreos_version
+    config.vm.box_url = "http://" + $coreos_channel + ".release.core-os.net/amd64-usr/" + $coreos_version + "/coreos_production_vagrant.json"
+
+    config.vm.define vm_name = $instance_name do |config|
+        config.vm.hostname = vm_name
+        
+	#config.vm.network :private_network, ip: $instance_ip, autoconfig: false
+	config.vm.network :public_network, :bridge=>"eno1", :mac=> $instance_mac, ip: $instance_ip
+
+        config.vm.provider :virtualbox do |virtualbox|
+            virtualbox.gui = $virtualbox_gui
+            virtualbox.memory = $virtualbox_memory
+            virtualbox.cpus = $virtualbox_cpus
+        end
+
+        # sync local directories
+        config.vm.synced_folder "opt", "/home/core/opt"
+        config.vm.synced_folder "k8s", "/home/core/k8s"
+        config.vm.synced_folder "images/all", "/home/core/images/all"
+        config.vm.synced_folder "images/controller", "/home/core/images/controller"
+        config.vm.synced_folder "inaetics-demo", "/home/core/inaetics-demo"
+        config.vm.synced_folder "user-data", "/tmp/user-data"
+        config.vm.provision :shell, :inline => $provision_script
+    end
+end
