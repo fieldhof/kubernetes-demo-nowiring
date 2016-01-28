@@ -46,7 +46,7 @@ coreos:
         RemainAfterExit=yes
         EnvironmentFile=/etc/kubernetes.env
         ExecStart=/opt/bin/kubectl create -f /home/core/k8s/inaetics/inaetics-queue-service.json
-	ExecStart=/opt/bin/kubectl create -f /home/core/k8s/inaetics/inaetics-queue-celix-service.json
+        ExecStart=/opt/bin/kubectl create -f /home/core/k8s/inaetics/inaetics-queue-celix-service.json
         ExecStart=/opt/bin/kubectl create -f /home/core/k8s/inaetics/ace-provisioning-service.json
         ExecStart=/opt/bin/kubectl create -f /home/core/k8s/inaetics/inaetics-viewer-service.json
         ExecStart=/opt/bin/kubectl create -f /home/core/k8s/inaetics/ace-provisioning-controller.json
@@ -66,6 +66,6 @@ coreos:
         ExecStop=/opt/bin/kubectl delete -f /home/core/k8s/inaetics/ace-provisioning-service.json
         ExecStop=/opt/bin/kubectl delete -f /home/core/k8s/inaetics/inaetics-viewer-service.json
         ExecStop=/opt/bin/kubectl delete -f /home/core/k8s/inaetics/inaetics-queue-service.json
-	ExecStop=/opt/bin/kubectl delete -f /home/core/k8s/inaetics/inaetics-queue-celix-service.json
+        ExecStop=/opt/bin/kubectl delete -f /home/core/k8s/inaetics/inaetics-queue-celix-service.json
 
 ###EOF###
