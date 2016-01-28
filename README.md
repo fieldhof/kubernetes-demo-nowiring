@@ -7,6 +7,7 @@ For use, first follow the instructions on the page of the kubernetes-demo-cluste
 
 # Steps for adding phones
 (all relative paths are relative to your kubernetes-demo-cluster directory)
+Before starting, make sure you're connected to a router and that the phones can connect to them.
 
 1. Find out what ip address your Controller has `ip a` (not the 172.17.8.20)
 1. Copy all the contents in this repository to the kubernetes-demo-cluster directory
@@ -18,6 +19,12 @@ For use, first follow the instructions on the page of the kubernetes-demo-cluste
 7. Repeat step 3 - 6 for celix (Change felix to celix in the steps)
 8. You now have to add your phone bundles to Apache Ace. This can be done by placing them in Controller/inaetics-demo/bundles/default-resources. The bundles need to be .jar files. Check [here](https://github.com/bpetri/nativeLoad/wiki/Folder:-apache_ace_config) how to do that get a .zip to a .jar file (Scroll down to bundle-renamer/ziptojar.sh)
 9. Edit the default-mapping.gosh so the phone bundles are included as wel. Make sure to create the features, distribution and targets. Name the targets so the cpu architecture is in the id and link them to the correct bundles.
+10. The phones will need some configuration as well
+  DISCOVERY_ETCD_SERVER_IP=[controller_ip]
+  DISCOVERY_ETCD_SERVER_PORT=2379
+  DISCOVERY_ETCD_ROOT_PATH=inaetics/discover
+  deployment_admin_url=[controller_ip]:90
+  deployment_admin_identification=[target_name_put_in_gosh_file]
 
 # Configuring node-agent.sh <a name="config_node-agent"></a>
 For felix, you need to change the following configuration in felix/node-agent.sh but only when it's a queue, this is when $agent_id = felix_2
